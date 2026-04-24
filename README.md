@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# رياض الشهري — الموقع الشخصي
 
-## Getting Started
+موقع شخصي لرياض الشهري — مقالات في هندسة البرمجيات والتقنية، ومشاريع برمجية، بالعربية والإنجليزية.
 
-First, run the development server:
+**رابط الموقع:** [riyadhshehri.com](https://riyadhshehri.com)
+
+---
+
+## التقنيات المستخدمة
+
+| التقنية | الاستخدام |
+|---|---|
+| Next.js 15 + App Router | الإطار الرئيسي |
+| TypeScript | لغة البرمجة |
+| Tailwind CSS v4 | التنسيق |
+| shadcn/ui | مكونات الواجهة |
+| next-themes | Dark Mode |
+| react-icons | أيقونات التقنيات |
+| خطوط ثمانية | الطباعة العربية |
+| IBM Plex | الطباعة الإنجليزية |
+
+---
+
+## المميزات
+
+- تصميم RTL — العربية أولاً
+- Dark Mode كامل مع حفظ تفضيل المستخدم
+- خطوط ثمانية (Display / Text / Sans) للعناوين والنصوص
+- صفحة مقالات بتصميم أدبي — قائمة رأسية مرقمة مع بيانات وصفية
+- صفحة مشاريع — شبكة بطاقات مع أيقونات تقنية بألوانها الرسمية
+- SEO كامل: title template، OpenGraph، Twitter Card
+- تصميم متجاوب
+
+---
+
+## بيئة التطوير المحلية
 
 ```bash
+# استنسخ المستودع
+git clone https://github.com/riyadhshehri/portfolio.git
+cd portfolio
+
+# ثبّت الحزم
+npm install
+
+# انسخ ملف البيئة
+cp .env.example .env.local
+
+# ابدأ خادم التطوير
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+الموقع سيعمل على: `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## بنية المشروع
 
-## Learn More
+```
+portfolio/
+├── app/
+│   ├── layout.tsx                  # التخطيط الجذري + Metadata
+│   ├── page.tsx                    # الصفحة الرئيسية (Hero sticky + content)
+│   ├── articles/
+│   │   ├── page.tsx                # قائمة المقالات
+│   │   └── [slug]/page.tsx         # مقال فردي
+│   └── projects/
+│       └── page.tsx                # شبكة المشاريع
+├── components/
+│   ├── site-header.tsx             # الهيدر الثابت (inner pages only)
+│   ├── site-footer.tsx             # الفوتر
+│   ├── theme-toggle.tsx            # زر Dark Mode
+│   ├── tech-icon.tsx               # أيقونة تقنية مفردة
+│   └── project-card.tsx            # بطاقة المشروع
+├── lib/
+│   ├── articles.ts                 # بيانات المقالات + types
+│   ├── projects.ts                 # بيانات المشاريع + types
+│   └── tech-icons.ts               # registry الأيقونات التقنية
+├── public/fonts/thmanyah/          # خطوط ثمانية (woff2)
+├── theme.config.ts                 # المصدر الوحيد لإعدادات الموقع
+└── app/globals.css                 # CSS variables + @font-face
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## النشر على Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# تأكد من أن الكود على GitHub أولاً
+git push origin main
+```
 
-## Deploy on Vercel
+1. افتح [vercel.com/new](https://vercel.com/new) واربط المستودع
+2. أضف متغيرات البيئة من `.env.example` في إعدادات المشروع
+3. Vercel يكتشف Next.js تلقائياً ويبني المشروع عند كل push
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**ربط دومين مخصص:**
+- اشترِ الدومين (Hostinger, Namecheap, إلخ)
+- في Vercel: Settings → Domains → أضف دومينك
+- اتبع تعليمات DNS الخاصة بـ Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## الترخيص
+
+MIT License — استخدم الكود بحرية مع الإشارة إلى المصدر.
+
+---
+
+## المؤلف
+
+**رياض الشهري** — طالب هندسة برمجيات، جامعة أم القرى
+
+- LinkedIn: [riyadh-alshehri](https://www.linkedin.com/in/riyadh-alshehri-665482363)
+- GitHub: [riyadhshehri](https://github.com/riyadhshehri)
+- الموقع: [riyadhshehri.com](https://riyadhshehri.com)

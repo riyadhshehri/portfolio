@@ -1,65 +1,534 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { FileText, ArrowDown } from "lucide-react";
+import { SiteHeader } from "@/components/site-header";
+import { ProjectCard } from "@/components/project-card";
+import { getArticlesSorted } from "@/lib/articles";
+import { getProjectsSorted } from "@/lib/projects";
+import { theme } from "@/theme.config";
+
+const links = [
+  { icon: <FaLinkedin size={16} />, label: "LinkedIn", href: theme.social.linkedin },
+  { icon: <FaGithub size={16} />, label: "GitHub", href: theme.social.github },
+  { icon: <FileText size={16} />, label: "السيرة الذاتية", href: theme.social.cv },
+];
+
+function ScrollToTop() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () =>
+      setVisible(window.scrollY > window.innerHeight * 0.5);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      aria-label="العودة إلى الأعلى"
+      style={{
+        position: "fixed",
+        bottom: "2rem",
+        left: "2rem",
+        zIndex: 40,
+        width: 40,
+        height: 40,
+        borderRadius: "50%",
+        border: "1px solid var(--border)",
+        background: "var(--background)",
+        color: "var(--foreground)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        fontSize: 18,
+        opacity: visible ? 1 : 0,
+        pointerEvents: visible ? "auto" : "none",
+        transition: "opacity 0.2s, border-color 0.2s, color 0.2s",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--accent)";
+        (e.currentTarget as HTMLButtonElement).style.color = "var(--accent)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border)";
+        (e.currentTarget as HTMLButtonElement).style.color = "var(--foreground)";
+      }}
+    >
+      ↑
+    </button>
+  );
+}
 
 export default function Home() {
+  const articles = getArticlesSorted().slice(0, 3);
+  const projects = getProjectsSorted().slice(0, 2);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      <style>{`
+        html {
+          scroll-behavior: smooth;
+        }
+
+        body {
+          overflow-x: hidden;
+        }
+
+        .hero-section {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+          text-align: center;
+          position: sticky;
+          top: 0;
+          z-index: 0;
+          overflow: hidden;
+        }
+
+        .hero-section::after {
+          content: "";
+          position: absolute;
+          inset: auto 0 0 0;
+          height: 220px;
+          background: linear-gradient(to top, var(--background), transparent);
+          pointer-events: none;
+        }
+
+        .hero-inner {
+          position: relative;
+          z-index: 1;
+          animation: heroEnter 900ms ease both;
+        }
+
+        @keyframes heroEnter {
+          from {
+            opacity: 0;
+            transform: translateY(18px) scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        .scroll-cue {
+          position: absolute;
+          bottom: 28px;
+          right: 50%;
+          transform: translateX(50%);
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: var(--muted-foreground);
+          font-family: thmanyah-sans, sans-serif;
+          font-size: 13px;
+          text-decoration: none;
+          opacity: 0.7;
+          transition: opacity 0.2s, color 0.2s;
+          z-index: 2;
+          animation: cueFloat 1.8s ease-in-out infinite;
+        }
+
+        @keyframes cueFloat {
+          0%, 100% {
+            transform: translateX(50%) translateY(0);
+          }
+          50% {
+            transform: translateX(50%) translateY(8px);
+          }
+        }
+
+        .scroll-cue:hover {
+          opacity: 1;
+          color: var(--foreground);
+        }
+
+        .real-site {
+          position: relative;
+          z-index: 10;
+          min-height: 100vh;
+          margin-top: -1px;
+          border-top: 1px solid var(--border);
+          border-radius: 32px 32px 0 0;
+          background:
+            radial-gradient(circle at top right, color-mix(in srgb, var(--accent) 10%, transparent), transparent 30rem),
+            var(--background);
+          box-shadow: 0 -24px 80px rgba(0, 0, 0, 0.18);
+          animation: siteReveal linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 30%;
+        }
+
+        @keyframes siteReveal {
+          from {
+            opacity: 0.72;
+            transform: translateY(56px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .home-content {
+          max-width: 980px;
+          margin: 0 auto;
+          padding: 88px 24px 120px;
+        }
+
+        .home-section {
+          margin-bottom: 96px;
+          animation: sectionFade linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 32%;
+        }
+
+        @keyframes sectionFade {
+          from {
+            opacity: 0;
+            transform: translateY(28px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: end;
+          gap: 24px;
+          margin-bottom: 32px;
+        }
+
+        .section-title {
+          font-family: thmanyah-serif-display, serif;
+          font-size: clamp(34px, 5vw, 54px);
+          font-weight: 700;
+          line-height: 1.1;
+          margin: 0;
+          font-feature-settings: "salt" on;
+        }
+
+        .section-description {
+          font-family: thmanyah-serif-text, serif;
+          color: var(--muted-foreground);
+          font-size: 16px;
+          line-height: 1.8;
+          margin: 12px 0 0;
+          max-width: 580px;
+        }
+
+        .section-link {
+          color: var(--muted-foreground);
+          text-decoration: none;
+          font-family: thmanyah-sans, sans-serif;
+          font-size: 14px;
+          white-space: nowrap;
+          transition: color 0.2s;
+        }
+
+        .section-link:hover {
+          color: var(--accent);
+        }
+
+        .intro-card {
+          border: 1px solid var(--border);
+          border-radius: 18px;
+          padding: 32px;
+          display: grid;
+          grid-template-columns: 1.15fr 0.85fr;
+          gap: 32px;
+        }
+
+        .intro-card p {
+          font-family: thmanyah-serif-text, serif;
+          color: var(--muted-foreground);
+          font-size: 17px;
+          line-height: 1.9;
+          margin: 0;
+        }
+
+        .intro-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: grid;
+          gap: 12px;
+          font-family: thmanyah-sans, sans-serif;
+          font-size: 14px;
+          color: var(--foreground);
+        }
+
+        .intro-list li {
+          padding-bottom: 12px;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .article-preview {
+          display: grid;
+          grid-template-columns: 64px 1fr;
+          gap: 24px;
+          padding: 28px 0;
+          border-bottom: 1px solid var(--border);
+          color: inherit;
+          text-decoration: none;
+          transition: opacity 0.2s;
+        }
+
+        .article-preview:hover {
+          opacity: 0.72;
+        }
+
+        .article-number {
+          font-family: thmanyah-sans, sans-serif;
+          font-size: 13px;
+          color: var(--muted-foreground);
+          padding-top: 7px;
+        }
+
+        .article-title {
+          font-family: thmanyah-serif-display, serif;
+          font-size: clamp(22px, 3vw, 30px);
+          font-weight: 500;
+          line-height: 1.3;
+          margin: 0 0 10px;
+          font-feature-settings: "salt" on;
+        }
+
+        .article-excerpt {
+          font-family: thmanyah-serif-text, serif;
+          color: var(--muted-foreground);
+          font-size: 15px;
+          line-height: 1.7;
+          margin: 0;
+          max-width: 680px;
+        }
+
+        .projects-preview {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 24px;
+        }
+
+        @supports not (animation-timeline: view()) {
+          .real-site,
+          .home-section {
+            animation: none;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          html {
+            scroll-behavior: auto;
+          }
+
+          .hero-inner,
+          .scroll-cue,
+          .real-site,
+          .home-section {
+            animation: none;
+          }
+        }
+
+        @media (max-width: 760px) {
+          .real-site {
+            border-radius: 24px 24px 0 0;
+          }
+
+          .section-header {
+            flex-direction: column;
+            align-items: start;
+          }
+
+          .intro-card,
+          .projects-preview {
+            grid-template-columns: 1fr;
+          }
+
+          .article-preview {
+            grid-template-columns: 1fr;
+            gap: 8px;
+          }
+        }
+      `}</style>
+
+      <section className="hero-section" aria-label="Hero">
+        <div className="hero-inner">
+          <h1
+            style={{
+              fontFamily: '"thmanyah-serif-display", serif',
+              fontSize: "clamp(42px, 8vw, 72px)",
+              fontWeight: 700,
+              lineHeight: 1.1,
+              color: "var(--foreground)",
+              margin: "0 0 8px 0",
+              fontFeatureSettings: '"salt" on',
+            }}
+          >
+            رياض الشهري
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+          <h2
+            style={{
+              fontFamily: '"thmanyah-serif-display", serif',
+              fontSize: "clamp(18px, 2.8vw, 24px)",
+              fontWeight: 400,
+              color: "var(--muted-foreground)",
+              margin: 0,
+              letterSpacing: "0.01em",
+              direction: "ltr",
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Software Engineer
+          </h2>
+
+          <div
+            style={{
+              marginTop: 36,
+              display: "flex",
+              gap: 12,
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
           >
-            Documentation
-          </a>
+            {links.map(({ icon, label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "10px 18px",
+                  borderRadius: 999,
+                  border: "1px solid var(--border)",
+                  backgroundColor: "transparent",
+                  color: "var(--muted-foreground)",
+                  fontSize: 14,
+                  fontFamily: '"thmanyah-sans", sans-serif',
+                  textDecoration: "none",
+                  transition: "border-color 0.2s, color 0.2s",
+                  cursor: "pointer",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "var(--accent)";
+                  e.currentTarget.style.color = "var(--accent)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "var(--border)";
+                  e.currentTarget.style.color = "var(--muted-foreground)";
+                }}
+              >
+                {icon}
+                {label}
+              </a>
+            ))}
+          </div>
         </div>
-      </main>
-    </div>
+
+        <a className="scroll-cue" href="#site">
+          <ArrowDown size={14} />
+          <span>استكشف الموقع</span>
+        </a>
+      </section>
+
+      <section id="site" className="real-site" aria-label="Website">
+        <SiteHeader />
+
+        <main className="home-content">
+          <section className="home-section">
+            <div className="section-header">
+              <div>
+                <h2 className="section-title">واجهة الموقع</h2>
+                <p className="section-description">
+                  مساحة أرتّب فيها مقالاتي ومشاريعي وتجارب التعلم التي أبنيها أثناء رحلتي في هندسة البرمجيات.
+                </p>
+              </div>
+            </div>
+
+            <div className="intro-card">
+              <p>
+                هذا الموقع ليس بطاقة تعريف فقط. أتعامل معه كأرشيف حي لما أتعلمه، وما أبنيه، وما يتغير في طريقتي في فهم التقنية والأنظمة.
+              </p>
+
+              <ul className="intro-list">
+                <li>Software Engineering Student</li>
+                <li>Backend & Systems Learning Path</li>
+                <li>Arabic-first technical writing</li>
+              </ul>
+            </div>
+          </section>
+
+          <section className="home-section">
+            <div className="section-header">
+              <div>
+                <h2 className="section-title">المقالات</h2>
+                <p className="section-description">
+                  كتابات مختصرة حول هندسة البرمجيات، التعلم، الإنتاجية، وبناء الأنظمة الشخصية.
+                </p>
+              </div>
+
+              <Link className="section-link" href="/articles">
+                كل المقالات ←
+              </Link>
+            </div>
+
+            <div>
+              {articles.map((article, index) => (
+                <Link
+                  key={article.slug}
+                  href={`/articles/${article.slug}`}
+                  className="article-preview"
+                >
+                  <span className="article-number">
+                    {(index + 1).toString().padStart(2, "0")}
+                  </span>
+
+                  <div>
+                    <h3 className="article-title">{article.title}</h3>
+                    <p className="article-excerpt">{article.excerpt}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="home-section" style={{ marginBottom: 0 }}>
+            <div className="section-header">
+              <div>
+                <h2 className="section-title">المشاريع</h2>
+                <p className="section-description">
+                  مشاريع صغيرة ومباشرة، هدفها التدريب الحقيقي وبناء أثر واضح بدل عرض أسماء تقنية فقط.
+                </p>
+              </div>
+
+              <Link className="section-link" href="/projects">
+                كل المشاريع ←
+              </Link>
+            </div>
+
+            <div className="projects-preview">
+              {projects.map((project, index) => (
+                <ProjectCard key={project.slug} project={project} index={index} />
+              ))}
+            </div>
+          </section>
+        </main>
+      </section>
+
+      <ScrollToTop />
+    </>
   );
 }

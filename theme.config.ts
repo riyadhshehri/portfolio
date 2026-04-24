@@ -16,7 +16,7 @@ const social = {
   github: "https://github.com/riyadhshehri",
   linkedin: "https://www.linkedin.com/in/riyadh-alshehri-665482363",
   email: "riyadh.m.shehri@gmail.com",
-  cv: "#", // مؤقت — يُستبدل لاحقاً برابط PDF
+  cv: "/cv", // مؤقت — يُحدَّث لاحقاً بنسخة PDF للتحميل
 } as const;
 
 // ─── الألوان ─────────────────────────────────────────────────────────────────

@@ -452,9 +452,6 @@ export default function Home() {
             <div className="section-header">
               <div>
                 <h2 className="section-title">ما أبنيه وأتعلمه</h2>
-                <p className="section-description">
-                  هنا أوثق ما أبنيه وما أتعلمه في هندسة البرمجيات: مشاريع صغيرة، مقالات تقنية، وتجارب تساعدني على تحويل المعرفة إلى منتج واضح.
-                </p>
               </div>
             </div>
 
@@ -475,9 +472,6 @@ export default function Home() {
             <div className="section-header">
               <div>
                 <h2 className="section-title">المقالات</h2>
-                <p className="section-description">
-                  كتابات مختصرة حول هندسة البرمجيات، التعلم، الإنتاجية، وبناء الأنظمة الشخصية.
-                </p>
               </div>
 
               <Link className="section-link" href="/articles">
@@ -513,9 +507,6 @@ export default function Home() {
             <div className="section-header">
               <div>
                 <h2 className="section-title">المشاريع</h2>
-                <p className="section-description">
-                  مشاريع صغيرة ومباشرة، هدفها التدريب الحقيقي وبناء أثر واضح بدل عرض أسماء تقنية فقط.
-                </p>
               </div>
 
               <Link className="section-link" href="/projects">

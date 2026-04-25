@@ -490,7 +490,7 @@ export default function Home() {
                     <h3 className="article-title">{article.title}</h3>
                     <p style={{ fontFamily: "thmanyah-sans, sans-serif", fontSize: 13, color: "var(--muted-foreground)", margin: 0, display: "flex", gap: 12 }}>
                       <span>{article.date}</span>
-                      <span>{article.readingTime}</span>
+                      <span>{article.readingMinutes} {article.lang === "ar" ? "دقائق" : "min read"}</span>
                       <span>{article.lang === "ar" ? "عربي" : "English"}</span>
                     </p>
                   </div>

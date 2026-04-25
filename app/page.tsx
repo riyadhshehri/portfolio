@@ -456,10 +456,6 @@ export default function Home() {
             </div>
 
             <div className="intro-card">
-              <p>
-                هذا الموقع ليس بطاقة تعريف فقط. أتعامل معه كأرشيف حي لما أتعلمه، وما أبنيه، وما يتغير في طريقتي في فهم التقنية والأنظمة.
-              </p>
-
               <ul className="intro-list">
                 <li>Software Engineering Student</li>
                 <li>Backend & Systems Learning Path</li>

@@ -514,7 +514,7 @@ export default function Home() {
               {projects.map((project, index) => (
                 <Link
                   key={project.slug}
-                  href="/projects"
+                 href={`/projects#${project.slug}`}
                   className="project-preview-link"
                   aria-label={`عرض المشاريع: ${project.name}`}
                 >

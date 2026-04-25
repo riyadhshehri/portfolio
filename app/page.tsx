@@ -498,7 +498,11 @@ export default function Home() {
 
                   <div>
                     <h3 className="article-title">{article.title}</h3>
-                    <p className="article-excerpt">{article.excerpt}</p>
+                    <p style={{ fontFamily: "thmanyah-sans, sans-serif", fontSize: 13, color: "var(--muted-foreground)", margin: 0, display: "flex", gap: 12 }}>
+                      <span>{article.date}</span>
+                      <span>{article.readingTime}</span>
+                      <span>{article.lang === "ar" ? "عربي" : "English"}</span>
+                    </p>
                   </div>
                 </Link>
               ))}

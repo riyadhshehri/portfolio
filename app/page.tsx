@@ -219,15 +219,6 @@ export default function Home() {
           font-feature-settings: "salt" on;
         }
 
-        .section-description {
-          font-family: thmanyah-serif-text, serif;
-          color: var(--muted-foreground);
-          font-size: 16px;
-          line-height: 1.8;
-          margin: 12px 0 0;
-          max-width: 580px;
-        }
-
         .section-link {
           color: var(--muted-foreground);
           text-decoration: none;
@@ -245,17 +236,6 @@ export default function Home() {
           border: 1px solid var(--border);
           border-radius: 18px;
           padding: 32px;
-          display: grid;
-          grid-template-columns: 1.15fr 0.85fr;
-          gap: 32px;
-        }
-
-        .intro-card p {
-          font-family: thmanyah-serif-text, serif;
-          color: var(--muted-foreground);
-          font-size: 17px;
-          line-height: 1.9;
-          margin: 0;
         }
 
         .intro-list {
@@ -272,6 +252,11 @@ export default function Home() {
         .intro-list li {
           padding-bottom: 12px;
           border-bottom: 1px solid var(--border);
+        }
+
+        .intro-list li:last-child {
+          padding-bottom: 0;
+          border-bottom: 0;
         }
 
         .article-preview {
@@ -305,19 +290,33 @@ export default function Home() {
           font-feature-settings: "salt" on;
         }
 
-        .article-excerpt {
-          font-family: thmanyah-serif-text, serif;
+        .article-meta {
+          font-family: thmanyah-sans, sans-serif;
+          font-size: 13px;
           color: var(--muted-foreground);
-          font-size: 15px;
-          line-height: 1.7;
           margin: 0;
-          max-width: 680px;
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
         }
 
         .projects-preview {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 24px;
+        }
+
+        .project-preview-link {
+          color: inherit;
+          text-decoration: none;
+          display: block;
+          border-radius: 18px;
+          transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .project-preview-link:hover {
+          transform: translateY(-2px);
+          opacity: 0.96;
         }
 
         @supports not (animation-timeline: view()) {
@@ -350,7 +349,6 @@ export default function Home() {
             align-items: start;
           }
 
-          .intro-card,
           .projects-preview {
             grid-template-columns: 1fr;
           }
@@ -488,9 +486,11 @@ export default function Home() {
 
                   <div>
                     <h3 className="article-title">{article.title}</h3>
-                    <p style={{ fontFamily: "thmanyah-sans, sans-serif", fontSize: 13, color: "var(--muted-foreground)", margin: 0, display: "flex", gap: 12 }}>
+                    <p className="article-meta">
                       <span>{article.date}</span>
-                      <span>{article.readingMinutes} {article.lang === "ar" ? "دقائق" : "min read"}</span>
+                      <span>
+                        {article.readingMinutes} {article.lang === "ar" ? "دقائق" : "min read"}
+                      </span>
                       <span>{article.lang === "ar" ? "عربي" : "English"}</span>
                     </p>
                   </div>
@@ -512,7 +512,14 @@ export default function Home() {
 
             <div className="projects-preview">
               {projects.map((project, index) => (
-                <ProjectCard key={project.slug} project={project} index={index} />
+                <Link
+                  key={project.slug}
+                  href="/projects"
+                  className="project-preview-link"
+                  aria-label={`عرض المشاريع: ${project.name}`}
+                >
+                  <ProjectCard project={project} index={index} />
+                </Link>
               ))}
             </div>
           </section>

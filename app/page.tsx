@@ -451,9 +451,9 @@ export default function Home() {
           <section className="home-section">
             <div className="section-header">
               <div>
-                <h2 className="section-title">واجهة الموقع</h2>
+                <h2 className="section-title">ما أبنيه وأتعلمه</h2>
                 <p className="section-description">
-                  مساحة أرتّب فيها مقالاتي ومشاريعي وتجارب التعلم التي أبنيها أثناء رحلتي في هندسة البرمجيات.
+                  هنا أوثق ما أبنيه وما أتعلمه في هندسة البرمجيات: مشاريع صغيرة، مقالات تقنية، وتجارب تساعدني على تحويل المعرفة إلى منتج واضح.
                 </p>
               </div>
             </div>

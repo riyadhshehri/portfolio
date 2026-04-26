@@ -232,31 +232,72 @@ export default function Home() {
           color: var(--accent);
         }
 
-        .intro-card {
-          border: 1px solid var(--border);
-          border-radius: 18px;
-          padding: 32px;
+        .mukhtar-label {
+          font-family: thmanyah-sans, sans-serif;
+          font-size: 11px;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          color: var(--muted-foreground);
+          margin: 0 0 4px;
         }
 
-        .intro-list {
+        .mukhtar-list {
           list-style: none;
           padding: 0;
           margin: 0;
+          border-top: 1px solid var(--border);
+        }
+
+        .mukhtar-row {
           display: grid;
-          gap: 12px;
-          font-family: thmanyah-sans, sans-serif;
-          font-size: 14px;
-          color: var(--foreground);
-        }
-
-        .intro-list li {
-          padding-bottom: 12px;
+          grid-template-columns: 36px 1fr auto;
+          align-items: center;
+          gap: 20px;
+          padding: 20px 0;
           border-bottom: 1px solid var(--border);
+          color: inherit;
+          text-decoration: none;
+          transition: opacity 0.2s;
         }
 
-        .intro-list li:last-child {
-          padding-bottom: 0;
-          border-bottom: 0;
+        .mukhtar-row:hover {
+          opacity: 0.72;
+        }
+
+        .mukhtar-row:hover .mukhtar-title {
+          color: var(--accent);
+        }
+
+        .mukhtar-num {
+          font-family: thmanyah-sans, sans-serif;
+          font-size: 13px;
+          color: var(--accent);
+          opacity: 0.7;
+        }
+
+        .mukhtar-title {
+          font-family: thmanyah-serif-display, serif;
+          font-size: clamp(18px, 2.4vw, 24px);
+          font-weight: 500;
+          line-height: 1.3;
+          margin: 0;
+          font-feature-settings: "salt" on;
+          color: var(--foreground);
+          transition: color 0.2s;
+        }
+
+        .mukhtar-type {
+          font-family: thmanyah-sans, sans-serif;
+          font-size: 12px;
+          color: var(--muted-foreground);
+          white-space: nowrap;
+        }
+
+        @media (max-width: 760px) {
+          .mukhtar-row {
+            grid-template-columns: 28px 1fr auto;
+            gap: 12px;
+          }
         }
 
         .article-preview {
@@ -459,11 +500,30 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="intro-card">
-              <ul className="intro-list">
-                <li>Software Engineering Student</li>
-                <li>Backend & Systems Learning Path</li>
-                <li>Arabic-first technical writing</li>
+            <div>
+              <p className="mukhtar-label">مختارات</p>
+              <ul className="mukhtar-list">
+                <li>
+                  <Link href="/articles/unix-roots-linux-engineers-governments" className="mukhtar-row">
+                    <span className="mukhtar-num">01</span>
+                    <h3 className="mukhtar-title">جذور يونكس: لماذا يظل لينكس خيار المهندسين والدول؟</h3>
+                    <span className="mukhtar-type">مقال</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/projects/personal-portfolio" className="mukhtar-row">
+                    <span className="mukhtar-num">02</span>
+                    <h3 className="mukhtar-title">الموقع الشخصي</h3>
+                    <span className="mukhtar-type">مشروع</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/cv" className="mukhtar-row">
+                    <span className="mukhtar-num">03</span>
+                    <h3 className="mukhtar-title">السيرة الذاتية</h3>
+                    <span className="mukhtar-type">قريبًا</span>
+                  </Link>
+                </li>
               </ul>
             </div>
           </section>

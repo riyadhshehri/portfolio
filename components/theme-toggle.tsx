@@ -31,15 +31,31 @@ export function ThemeToggle() {
         background: "transparent",
         color: "var(--muted-foreground)",
         cursor: "pointer",
-        transition: "background 0.15s, color 0.15s",
+        transition: "background 0.2s, color 0.2s, border-color 0.2s",
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.background = "var(--muted)";
-        (e.currentTarget as HTMLButtonElement).style.color = "var(--foreground)";
+        const el = e.currentTarget as HTMLButtonElement;
+        el.style.background = "transparent";
+        el.style.color = "var(--accent)";
+        el.style.borderColor = "var(--accent)";
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.background = "transparent";
-        (e.currentTarget as HTMLButtonElement).style.color = "var(--muted-foreground)";
+        const el = e.currentTarget as HTMLButtonElement;
+        el.style.background = "transparent";
+        el.style.color = "var(--muted-foreground)";
+        el.style.borderColor = "var(--border)";
+      }}
+      onFocus={(e) => {
+        const el = e.currentTarget as HTMLButtonElement;
+        el.style.background = "transparent";
+        el.style.color = "var(--accent)";
+        el.style.borderColor = "var(--accent)";
+      }}
+      onBlur={(e) => {
+        const el = e.currentTarget as HTMLButtonElement;
+        el.style.background = "transparent";
+        el.style.color = "var(--muted-foreground)";
+        el.style.borderColor = "var(--border)";
       }}
     >
       {isDark ? <Sun size={16} /> : <Moon size={16} />}

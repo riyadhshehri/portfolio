@@ -42,7 +42,7 @@ export function SiteHeader() {
         }}
       >
         <Link
-          href="/"
+          href="/#top"
           style={{
             fontFamily: "thmanyah-serif-display, serif",
             fontSize: 18,
@@ -55,6 +55,12 @@ export function SiteHeader() {
             (e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)";
           }}
           onMouseLeave={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.color = "var(--foreground)";
+          }}
+          onFocus={(e) => {
+            (e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)";
+          }}
+          onBlur={(e) => {
             (e.currentTarget as HTMLAnchorElement).style.color = "var(--foreground)";
           }}
         >
@@ -80,10 +86,17 @@ export function SiteHeader() {
                   transition: "color 0.2s",
                 }}
                 onMouseEnter={(e) => {
-                  if (!active)
-                    (e.currentTarget as HTMLAnchorElement).style.color = "var(--foreground)";
+                  (e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)";
                 }}
                 onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.color = active
+                    ? "var(--accent)"
+                    : "var(--muted-foreground)";
+                }}
+                onFocus={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)";
+                }}
+                onBlur={(e) => {
                   (e.currentTarget as HTMLAnchorElement).style.color = active
                     ? "var(--accent)"
                     : "var(--muted-foreground)";

@@ -220,16 +220,18 @@ export default function Home() {
         }
 
         .section-link {
-          color: var(--muted-foreground);
+          color: var(--accent);
+          opacity: 0.7;
           text-decoration: none;
           font-family: thmanyah-sans, sans-serif;
           font-size: 14px;
           white-space: nowrap;
-          transition: color 0.2s;
+          transition: color 0.2s, opacity 0.2s;
         }
 
         .section-link:hover {
           color: var(--accent);
+          opacity: 1;
         }
 
         .mukhtar-label {
@@ -237,7 +239,8 @@ export default function Home() {
           font-size: 11px;
           font-weight: 500;
           letter-spacing: 0.08em;
-          color: var(--muted-foreground);
+          color: var(--accent);
+          opacity: 0.65;
           margin: 0 0 4px;
         }
 
@@ -318,7 +321,8 @@ export default function Home() {
         .article-number {
           font-family: thmanyah-sans, sans-serif;
           font-size: 13px;
-          color: var(--muted-foreground);
+          color: var(--accent);
+          opacity: 0.7;
           padding-top: 7px;
         }
 
@@ -329,6 +333,11 @@ export default function Home() {
           line-height: 1.3;
           margin: 0 0 10px;
           font-feature-settings: "salt" on;
+          transition: color 0.2s;
+        }
+
+        .article-preview:hover .article-title {
+          color: var(--accent);
         }
 
         .article-meta {
@@ -359,6 +368,7 @@ export default function Home() {
         .project-preview-link:hover {
           transform: translateY(-2px);
           opacity: 0.96;
+          box-shadow: 0 0 0 1.5px var(--accent);
         }
 
         .project-preview-link:focus-visible {

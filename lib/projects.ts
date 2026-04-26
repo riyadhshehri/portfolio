@@ -10,6 +10,8 @@ export interface Project {
   slug: string;
   name: string;
   description: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
   tech: TechKey[];
   status: ProjectStatus;
   github?: string;
@@ -20,36 +22,14 @@ export interface Project {
 // ─── بيانات المشاريع ──────────────────────────────────────────────────────────
 export const projects: Project[] = [
   {
-    slug: "forge",
-    name: "FORGE",
-    description: "مخطط تمارين رياضية ذكي يولّد برامج شخصية بناءً على هدفك ومستواك، مدعوم بـ Anthropic API.",
-    tech: ["react", "anthropic", "tailwind"],
-    status: "in-progress",
-    order: 1,
-  },
-  {
     slug: "personal-portfolio",
-    name: "Personal Portfolio",
+    name: "الموقع الشخصي",
     description: "موقعي الشخصي الذي تتصفّحه الآن — مبني بـ Next.js وخط ثمانية.",
     tech: ["nextjs", "typescript", "tailwind"],
-    status: "in-progress",
-    order: 2,
-  },
-  {
-    slug: "markdown-notes-sync",
-    name: "Markdown Notes Sync",
-    description: "تطبيق ملاحظات يحفظ كل ملاحظة كملف Markdown في مستودع GitHub خاص — للمزامنة بين الأجهزة.",
-    tech: ["nextjs", "github", "mdx"],
     status: "completed",
-    order: 3,
-  },
-  {
-    slug: "leetcode-tracker",
-    name: "LeetCode Tracker",
-    description: "أداة لتتبّع تقدّمي في LeetCode، تخزّن الحلول وتحسب إحصائيات الأنماط الخوارزمية.",
-    tech: ["python", "fastapi", "postgresql"],
-    status: "completed",
-    order: 4,
+    github: "https://github.com/riyadhshehri/portfolio",
+    demo: "https://portfolio-puce-five-25.vercel.app",
+    order: 1,
   },
 ];
 

@@ -32,9 +32,14 @@ function StatusBadge({ status }: { status: ProjectStatus }) {
 interface Props {
   project: Project;
   index: number;
+  locale?: "ar" | "en";
 }
 
-export function ProjectCard({ project, index }: Props) {
+export function ProjectCard({ project, index, locale = "ar" }: Props) {
+  const description =
+    locale === "en"
+      ? (project.descriptionEn ?? project.description)
+      : (project.descriptionAr ?? project.description);
   const hasLinks = project.github || project.demo;
 
   return (
@@ -87,7 +92,7 @@ export function ProjectCard({ project, index }: Props) {
           flex: 1,
         }}
       >
-        {project.description}
+        {description}
       </p>
 
       <div

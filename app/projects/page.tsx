@@ -1,12 +1,9 @@
+"use client";
+
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ProjectCard } from "@/components/project-card";
 import { getProjectsSorted } from "@/lib/projects";
-
-export const metadata = {
-  title: "المشاريع",
-  description: "مجموعة من المشاريع التي بنيتها أو أبنيها حالياً.",
-};
 
 export default function ProjectsPage() {
   const projects = getProjectsSorted();
@@ -33,13 +30,25 @@ export default function ProjectsPage() {
           gap: 24px;
         }
 
-        .project-anchor {
-          scroll-margin-top: 96px;
+        .project-card-link {
+          display: block;
+          border-radius: 18px;
+          cursor: pointer;
+          transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .project-card-link:hover {
+          transform: translateY(-2px);
+          opacity: 0.96;
+        }
+
+        .project-card-link:focus-visible {
+          outline: 2px solid var(--accent);
+          outline-offset: 4px;
         }
 
         .project-card:hover {
           border-color: var(--accent);
-          transform: translateY(-2px);
         }
 
         .card-ext-link:hover {
@@ -77,7 +86,20 @@ export default function ProjectsPage() {
             <div
               key={project.slug}
               id={project.slug}
-              className="project-anchor"
+              className="project-card-link"
+              role="link"
+              tabIndex={0}
+              aria-label={`عرض مشروع: ${project.name}`}
+              onClick={(e) => {
+                if ((e.target as HTMLElement).closest("a")) return;
+                window.location.href = `/projects/${project.slug}`;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  window.location.href = `/projects/${project.slug}`;
+                }
+              }}
             >
               <ProjectCard project={project} index={index} />
             </div>

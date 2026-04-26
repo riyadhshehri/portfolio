@@ -6,7 +6,7 @@ import { theme } from "@/theme.config";
 export const metadata: Metadata = {
   title: "السيرة الذاتية",
   description:
-    "السيرة الذاتية لرياض الشهري — طالب هندسة برمجيات في جامعة أم القرى.",
+    "السيرة الذاتية لرياض الشهري .",
 };
 
 const upcomingItems = [

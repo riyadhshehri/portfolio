@@ -311,12 +311,18 @@ export default function Home() {
           text-decoration: none;
           display: block;
           border-radius: 18px;
+          cursor: pointer;
           transition: transform 0.2s, opacity 0.2s;
         }
 
         .project-preview-link:hover {
           transform: translateY(-2px);
           opacity: 0.96;
+        }
+
+        .project-preview-link:focus-visible {
+          outline: 2px solid var(--accent);
+          outline-offset: 4px;
         }
 
         @supports not (animation-timeline: view()) {
@@ -512,14 +518,25 @@ export default function Home() {
 
             <div className="projects-preview">
               {projects.map((project, index) => (
-                <Link
+                <div
                   key={project.slug}
-                 href={`/projects#${project.slug}`}
                   className="project-preview-link"
-                  aria-label={`عرض المشاريع: ${project.name}`}
+                  role="link"
+                  tabIndex={0}
+                  aria-label={`عرض مشروع: ${project.name}`}
+                  onClick={(e) => {
+                    if ((e.target as HTMLElement).closest("a")) return;
+                    window.location.href = `/projects/${project.slug}`;
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      window.location.href = `/projects/${project.slug}`;
+                    }
+                  }}
                 >
                   <ProjectCard project={project} index={index} />
-                </Link>
+                </div>
               ))}
             </div>
           </section>
